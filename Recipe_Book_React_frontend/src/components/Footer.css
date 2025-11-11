@@ -1,0 +1,39 @@
+/* Fixed Footer Styles */
+@media (min-width: 1000px) {
+  .main-footer {
+    background-color: var(--primary-color);
+  color: var(--white);
+  padding: 1rem 0;
+  position: fixed;
+  bottom: 0;
+  z-index: 100;
+  width: 100%;
+  height: 4%;
+  }
+}
+
+@media (max-width: 999px) {
+  .main-footer {
+    background-color: var(--primary-color);
+  color: var(--white);
+  padding: 1rem 0;
+  bottom: 0;
+  z-index: 100;
+  width: 100%;
+  height: 4%;
+  }
+}
+
+
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+  padding: 0 2rem;
+}
+
+.footer-content p {
+  font-size: 0.8rem;
+  margin-bottom: 0.3rem;
+}
