@@ -1,16 +1,25 @@
-const { MongoClient, ObjectId } = require('mongodb');
+const { MongoClient } = require('mongodb');
+require('dotenv').config();
 
 let db;
 
 const connectDB = async () => {
   try {
-    const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/recipe_book';
-    const client = new MongoClient(mongoUri);
+    if (!process.env.MONGODB_URI) {
+      throw new Error('❌ MONGODB_URI not found in environment variables');
+    }
+
+    const client = new MongoClient(process.env.MONGODB_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
 
     await client.connect();
-    db = client.db();
 
-    // Create indexes
+    // You can specify your DB name explicitly (recommended)
+    db = client.db('recipeDB');
+
+    // Optional: create indexes for better performance
     const usersCollection = db.collection('users');
     const favoritesCollection = db.collection('favorites');
 
@@ -18,7 +27,7 @@ const connectDB = async () => {
     await favoritesCollection.createIndex({ userId: 1 });
     await favoritesCollection.createIndex({ userId: 1, recipeId: 1 }, { unique: true });
 
-    console.log('✅ MongoDB connected successfully');
+    console.log('✅ Connected to MongoDB Atlas successfully');
     return db;
   } catch (error) {
     console.error('❌ MongoDB connection error:', error.message);
